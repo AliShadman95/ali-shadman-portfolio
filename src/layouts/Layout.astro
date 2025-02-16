@@ -1,0 +1,259 @@
+---
+import Particles from "astro-particles";
+import type { ISourceOptions } from "tsparticles-engine";
+
+const options: ISourceOptions = {
+  autoPlay: true,
+  backgroundMask: {
+    composite: "destination-out",
+    cover: {
+      color: {
+        value: "#fff",
+      },
+      opacity: 1,
+    },
+    enable: false,
+  },
+  backgroundMode: {
+    enable: true,
+    zIndex: -1,
+  },
+  detectRetina: true,
+  fpsLimit: 144,
+  infection: {
+    cure: false,
+    delay: 0,
+    enable: false,
+    infections: 0,
+    stages: [],
+  },
+  interactivity: {
+    detect_on: "window",
+    events: {
+      onClick: {
+        enable: true,
+        mode: "repulse",
+      },
+      onHover: {
+        enable: true,
+        mode: "bubble",
+        parallax: {
+          enable: true,
+          force: 30,
+          smooth: 30,
+        },
+      },
+    },
+    modes: {
+      bubble: {
+        distance: 250,
+        duration: 2,
+        opacity: 0,
+        size: 0,
+      },
+      grab: {
+        distance: 400,
+      },
+      repulse: {
+        distance: 400,
+      },
+    },
+  },
+  particles: {
+    color: {
+      value: "#ffffff",
+    },
+    links: {
+      color: {
+        value: "#ffffff",
+      },
+      distance: 150,
+      opacity: 0.4,
+    },
+    move: {
+      attract: {
+        rotate: {
+          x: 600,
+          y: 600,
+        },
+      },
+      enable: true,
+      outModes: {
+        default: "out",
+        bottom: "out",
+        left: "out",
+        right: "out",
+        top: "out",
+      },
+      random: true,
+      speed: 1,
+    },
+    number: {
+      density: {
+        enable: true,
+      },
+      value: 160,
+    },
+    opacity: {
+      random: true,
+      animation: {
+        enable: true,
+        speed: 1,
+      },
+    },
+    shape: {
+      options: {
+        polygon: {
+          nb_sides: 5,
+        },
+        star: {
+          nb_sides: 5,
+        },
+        image: {
+          src: "https://cdn.matteobruni.it/images/particles/github.svg",
+          width: 100,
+          height: 100,
+        },
+        images: {
+          src: "https://cdn.matteobruni.it/images/particles/github.svg",
+          width: 100,
+          height: 100,
+        },
+      },
+    },
+    size: {
+      random: true,
+      animation: {
+        minimumValue: 0.3,
+        speed: 4,
+      },
+    },
+    stroke: {
+      color: {
+        value: "#000000",
+        animation: {
+          enable: false,
+          speed: 1,
+          sync: true,
+        },
+      },
+    },
+  },
+  pauseOnBlur: true,
+  pauseOnOutsideViewport: true,
+};
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta charset="UTF-8" />
+    <meta name="description" content="Software Developer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      />
+    </noscript>
+
+    <title>{title}</title>
+  </head>
+  <body class="bg-[--background] md:px-48 lg:px-20 px-9">
+    <slot />
+  </body>
+</html>
+
+<script>
+  import { type Container, type Engine, tsParticles } from "tsparticles-engine";
+  import { loadFull } from "tsparticles";
+
+  // the function name is the parameter passed to the init attribute
+  // required
+  // add the function to window is mandatory, it will be searched there
+  window.particlesInit = async function (engine: Engine) {
+    await loadFull(engine);
+  };
+
+  // the function name is the parameter passed to the loaded attribute
+  // optional
+  // add the function to window is mandatory, it will be searched there
+  window.particlesLoaded = function (container: Container) {
+    console.log("particlesLoaded callback");
+  };
+</script>
+<Particles id="tsparticles" options={options} init="particlesInit" />
+
+<style is:global>
+  :root {
+    --background: #101010;
+    --sec: #00f0ff;
+    --white: #dfdfdf;
+    --white-icon: #f3f3f398;
+    --white-icon-tr: #f3f3f310;
+    --font: "montserrat", system-ui, sans-serif;
+  }
+
+  * {
+    font-family: var(--font);
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  *::selection {
+    background-color: var(--sec);
+    color: var(--background);
+  }
+
+  /* Scrollbar styles */
+
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--container);
+    border-radius: 30px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--background);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--pink);
+  }
+
+  /* Scrollbar styles for Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) var(--container);
+  }
+
+  canvas {
+    height: 0px;
+  }
+</style>
